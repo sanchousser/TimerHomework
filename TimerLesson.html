@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Styling for the timer container */
+        .timer__container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Styling the button */
+        .timer-start__button {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .timer-start__button:hover {
+            background-color: #218838;
+        }
+
+        .timer-start__button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+
+        /* Styling for the timer display */
+        .timer-display {
+            font-size: 48px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        /* Adding some margin between the button and the display */
+        .timer__container>* {
+            margin-bottom: 20px;
+        }
+
+        .animate {
+            animation: pulse 1s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1 -->
+    <!-- <div class="timer__container">
+        <button type="button" class="timer-start__button">
+            Start timer
+        </button>
+        <div class="timer-display">01:00</div>
+    </div> -->
+
+
+    <div class="timer__container">
+        <button type="button" class="timer-start__button">
+            Start timer
+        </button>
+        <div class="timer-display">00:30.000</div>
+    </div>
+    <script type="module">
+
+        // 1
+
+
+        // const timerStartBtn = document.querySelector('.timer-start__button');
+        // const timerDisplay = document.querySelector('.timer-display');
+
+        // timerStartBtn.addEventListener('click', initTimer)
+
+
+        // let totalMinutes = 60;
+        // let intervalId = null;
+
+
+
+        // function timerFormat(minutes) {
+        //     const hours = Math.floor(minutes / 60);
+        //     const minutesRemain = minutes % 60;
+
+        //     const formatHours = hours.toString().padStart(2, '0')
+        //     const formatMinutes = minutesRemain.toString().padStart(2, '0')
+        //     return `${formatHours} : ${formatMinutes}`
+        // }
+
+        // function updateTimerDisplay() {
+        //     timerDisplay.textContent = timerFormat(totalMinutes)
+        // }
+
+
+
+
+        // function initTimer() {
+        //     if (intervalId) {
+        //         return;
+        //     }
+
+        //     timerStartBtn.disable = true;
+
+        //     intervalId = setInterval(() => {
+        //         totalMinutes--;
+        //         updateTimerDisplay()
+
+        //         if (totalMinutes === 30) {
+        //             alert('Less then half an our is remaining')
+        //         }
+
+        //         if (totalMinutes === 0) {
+        //             clearInterval(intervalId);
+        //             intervalId = null;
+        //             timerStartBtn.disable = false;
+
+        //             alert('Time is up');
+        //         }
+        //     }, 60000);
+
+
+
+        // }
+
+
+        // 2
+
+
+
+        const timerStartBtn = document.querySelector('.timer-start__button');
+        const timerDisplay = document.querySelector('.timer-display');
+
+        timerStartBtn.addEventListener('click', initTimer)
+
+
+        let totalMinutes = 30000;
+        let intervalId = null;
+        let isAnimated = false;
+
+
+
+        function timerFormat(miliseconds) {
+            const seconds = Math.floor(miliseconds / 1000);
+            const milisecondsRemain = miliseconds % 1000;
+
+            const formatSeconds = seconds.toString().padStart(2, '0')
+            const formatMiliseconds = milisecondsRemain.toString().padStart(3, '0')
+            return `00 : ${formatSeconds}.${formatMiliseconds}`
+        }
+
+        function updateTimerDisplay() {
+            timerDisplay.textContent = timerFormat(totalMinutes)
+        }
+
+
+
+
+        function initTimer() {
+            if (intervalId) {
+                return;
+            }
+
+            timerStartBtn.disable = true;
+
+            intervalId = setInterval(() => {
+                totalMinutes--;
+                updateTimerDisplay()
+
+                if (totalMinutes <= 10000) {
+                    timerDisplay.classList.add('animate');
+                    isAnimated = true;
+                }
+
+                if (totalMinutes === 0) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                    timerStartBtn.disable = false;
+                    timerDisplay.classList.remove('animate');
+
+                    
+
+                    alert('Time is up');
+                }
+            }, 1);
+
+
+
+        }
+    </script>
+</body>
+
+</html>
